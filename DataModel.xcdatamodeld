@@ -1,0 +1,9 @@
+Entity: User
+- id: UUID
+- totalDrawCount: Int32
+
+Entity: Card
+- id: UUID
+- animeSeries: String  // 动漫IP
+- rarity: Int16        // 稀有度(1-5)
+- obtainDate: Date

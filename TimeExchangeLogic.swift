@@ -36,7 +36,7 @@ class TimeExchangeManager {
     }
     
     // 获取当日已使用的抽卡次数
-    private func getTodayUsedDraws() -> Int {
+    private func getTodayUsedDraws(userId: UUID) -> Int {
         let context = PersistenceController.shared.container.viewContext
         let request: NSFetchRequest<DrawRecord> = DrawRecord.fetchRequest()
         
@@ -45,7 +45,10 @@ class TimeExchangeManager {
         let today = calendar.startOfDay(for: Date())
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
         
-        request.predicate = NSPredicate(format: "timestamp >= %@ AND timestamp < %@", today as CVarArg, tomorrow as CVarArg)
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "timestamp >= %@ AND timestamp < %@", today as CVarArg, tomorrow as CVarArg),
+            NSPredicate(format: "userId == %@", userId as CVarArg)
+        ])
         
         do {
             let records = try context.fetch(request)
@@ -57,35 +60,24 @@ class TimeExchangeManager {
     }
     
     // 记录抽卡行为
-    func recordDrawUsage() -> Bool {
+    func recordDrawUsage(userId: UUID) -> Bool {
         let context = PersistenceController.shared.container.viewContext
         
         // 检查是否还有剩余抽卡次数
-        if let todayUsage = getTodayScreenTime() {
+        if let todayUsage = getTodayScreenTime(userId: userId) {
             let availableDraws = calculateDrawChances(usageHours: todayUsage)
-            let usedDraws = getTodayUsedDraws()
+            let usedDraws = getTodayUsedDraws(userId: userId)
             
             if usedDraws >= availableDraws || usedDraws >= maxDailyDraws {
                 return false // 没有可用抽卡次数了
             }
         }
         
-        // 创建新的抽卡记录
-        let drawRecord = DrawRecord(context: context)
-        drawRecord.id = UUID()
-        drawRecord.timestamp = Date()
-        
-        do {
-            try context.save()
-            return true
-        } catch {
-            print("Error saving draw record: \(error)")
-            return false
-        }
+        return true // 可以抽卡
     }
     
     // 获取今日屏幕使用时间
-    private func getTodayScreenTime() -> Double? {
+    private func getTodayScreenTime(userId: UUID) -> Double? {
         let context = PersistenceController.shared.container.viewContext
         let request: NSFetchRequest<UsageRecord> = UsageRecord.fetchRequest()
         
@@ -94,13 +86,16 @@ class TimeExchangeManager {
         let today = calendar.startOfDay(for: Date())
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
         
-        request.predicate = NSPredicate(format: "date >= %@ AND date < %@", today as CVarArg, tomorrow as CVarArg)
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "date >= %@ AND date < %@", today as CVarArg, tomorrow as CVarArg),
+            NSPredicate(format: "userId == %@", userId as CVarArg)
+        ])
         
         do {
             let records = try context.fetch(request)
             // 计算今日总使用时间（小时）
-            let totalSeconds = records.reduce(0) { $0 + ($1.duration / 3600) }
-            return totalSeconds
+            let totalSeconds = records.reduce(0) { $0 + $1.duration }
+            return totalSeconds / 3600
         } catch {
             print("Error fetching usage records: \(error)")
             return nil
@@ -108,13 +103,13 @@ class TimeExchangeManager {
     }
     
     // 获取今日剩余抽卡次数
-    func getRemainingDrawsForToday() -> Int {
-        guard let todayUsage = getTodayScreenTime() else {
+    func getRemainingDrawsForToday(userId: UUID) -> Int {
+        guard let todayUsage = getTodayScreenTime(userId: userId) else {
             return 0
         }
         
         let availableDraws = calculateDrawChances(usageHours: todayUsage)
-        let usedDraws = getTodayUsedDraws()
+        let usedDraws = getTodayUsedDraws(userId: userId)
         
         return max(0, availableDraws - usedDraws)
     }

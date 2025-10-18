@@ -186,5 +186,5 @@ class GameSystemTest {
 
 // 运行测试
 // 注意：在实际使用中，建议通过Xcode直接运行此测试
-// let gameTest = GameSystemTest()
-// gameTest.runFullTest()
+let gameTest = GameSystemTest()
+gameTest.runFullTest()

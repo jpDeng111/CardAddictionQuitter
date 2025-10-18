@@ -1,9 +1,47 @@
 Entity: User
 - id: UUID
+- username: String
 - totalDrawCount: Int32
+- createdDate: Date
+- lastLoginDate: Date
 
-Entity: Card
+Entity: CardTemplate
 - id: UUID
-- animeSeries: String  // 动漫IP
-- rarity: Int16        // 稀有度(1-5)
-- obtainDate: Date
+- animeSeries: String     // 动漫IP
+- characterName: String   // 角色名称
+- rarity: Int16           // 稀有度 (1=N, 2=R, 3=SR, 4=SSR)
+- attackBonus: Int32      // 攻击加成
+- defenseBonus: Int32     // 防御加成
+- cardDescription: String // 卡片描述
+- imageUrl: String        // 卡片图片URL
+- isActive: Bool          // 是否启用
+
+Entity: UserCard
+- id: UUID
+- userId: UUID            // 关联User.id
+- templateId: UUID        // 关联CardTemplate.id
+- obtainDate: Date        // 获得时间
+- isBoosted: Bool         // 是否使用概率提升
+- level: Int16            // 卡片等级
+- experience: Int32       // 经验值
+- isFavorite: Bool        // 是否收藏
+
+Entity: MissionRecord
+- id: UUID
+- userId: UUID            // 关联User.id
+- type: String            // 任务类型
+- completedDate: Date     // 完成时间
+- probabilityBoost: Double // 概率提升值
+
+Entity: DrawRecord
+- id: UUID
+- userId: UUID            // 关联User.id
+- userCardId: UUID        // 关联UserCard.id
+- timestamp: Date         // 抽卡时间
+- drawType: String        // 抽卡类型 (single/multi)
+
+Entity: UsageRecord
+- id: UUID
+- userId: UUID            // 关联User.id
+- date: Date              // 使用日期
+- duration: Double        // 使用时长(秒)

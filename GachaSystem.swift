@@ -1,7 +1,7 @@
 import Foundation
 
 // 稀有度枚举
-enum Rarity: String, CaseIterable {
+enum Rarity: String, CaseIterable, Codable {
     case N = "N"
     case R = "R"
     case SR = "SR"
@@ -38,7 +38,7 @@ enum Rarity: String, CaseIterable {
 }
 
 // 动漫IP枚举
-enum AnimeSeries: String, CaseIterable {
+enum AnimeSeries: String, CaseIterable, Codable {
     case onePiece = "海贼王"
     case naruto = "火影忍者"
     case demonSlayer = "鬼灭之刃"

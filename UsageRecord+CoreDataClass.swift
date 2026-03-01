@@ -4,11 +4,6 @@ import CoreData
 // UsageRecord类的Core Data实现
 @objc(UsageRecord)
 public class UsageRecord: NSManagedObject {
-    // Core Data自动生成的属性访问器
-    @NSManaged public var id: UUID?
-    @NSManaged public var date: Date?
-    @NSManaged public var duration: Double  // 使用时长（秒）
-    @NSManaged public var userId: UUID?
     
     // 便捷初始化方法
     convenience init(context: NSManagedObjectContext, duration: Double, userId: UUID) {

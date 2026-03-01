@@ -15,7 +15,7 @@ class TimeExchangeManager {
     private let bonusDraws = 2       // 提前完成目标的额外奖励抽卡次数
     
     // 计算当日可获得的抽卡次数
-    func calculateDrawChances(usageHours: Double) -> Int {
+    func calculateDrawChances(usageHours: Double, userId: UUID? = nil) -> Int {
         // 基础计算逻辑
         let penalty = max(0, Int(usageHours) - 3)
         var availableDraws = baseDrawChances - penalty
@@ -29,10 +29,13 @@ class TimeExchangeManager {
         }
         
         // 检查是否已经达到每日上限
-        let todayUsedDraws = getTodayUsedDraws()
-        let remainingDraws = max(0, maxDailyDraws - todayUsedDraws)
+        if let userId = userId {
+            let todayUsedDraws = getTodayUsedDraws(userId: userId)
+            let remainingDraws = max(0, maxDailyDraws - todayUsedDraws)
+            return min(availableDraws, remainingDraws)
+        }
         
-        return min(availableDraws, remainingDraws)
+        return min(availableDraws, maxDailyDraws)
     }
     
     // 获取当日已使用的抽卡次数
@@ -115,8 +118,8 @@ class TimeExchangeManager {
     }
     
     // 获取使用时间进度信息（用于UI显示）
-    func getProgressInfo() -> (currentHours: Double, targetHours: Double, progressPercentage: Double) {
-        let todayUsage = getTodayScreenTime() ?? 0
+    func getProgressInfo(userId: UUID) -> (currentHours: Double, targetHours: Double, progressPercentage: Double) {
+        let todayUsage = getTodayScreenTime(userId: userId) ?? 0
         let targetHours = 3.0 // 目标控制在3小时内
         let progressPercentage = min(1.0, todayUsage / targetHours)
         

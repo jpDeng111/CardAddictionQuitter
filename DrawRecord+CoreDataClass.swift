@@ -4,12 +4,6 @@ import CoreData
 // DrawRecord类的Core Data实现
 @objc(DrawRecord)
 public class DrawRecord: NSManagedObject {
-    // Core Data自动生成的属性访问器
-    @NSManaged public var id: UUID?
-    @NSManaged public var timestamp: Date?
-    @NSManaged public var userCardId: UUID?  // 关联UserCard.id
-    @NSManaged public var userId: UUID?      // 关联User.id
-    @NSManaged public var drawType: String?  // single/multi
     
     // 便捷初始化方法
     convenience init(context: NSManagedObjectContext, 

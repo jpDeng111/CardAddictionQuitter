@@ -4,11 +4,6 @@ import CoreData
 // MissionRecord类的Core Data实现
 @objc(MissionRecord)
 public class MissionRecord: NSManagedObject {
-    // Core Data自动生成的属性访问器
-    @NSManaged public var id: UUID?
-    @NSManaged public var type: String?
-    @NSManaged public var completedDate: Date?
-    @NSManaged public var probabilityBoost: Double
     
     // 从MissionType创建MissionRecord的便捷方法
     convenience init(context: NSManagedObjectContext, missionType: MissionType) {

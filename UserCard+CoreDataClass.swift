@@ -5,15 +5,6 @@ import CoreData
 // 用户卡片：用户实际拥有的卡片实例
 @objc(UserCard)
 public class UserCard: NSManagedObject {
-    // Core Data自动生成的属性访问器
-    @NSManaged public var id: UUID?
-    @NSManaged public var userId: UUID?
-    @NSManaged public var templateId: UUID?
-    @NSManaged public var obtainDate: Date?
-    @NSManaged public var isBoosted: Bool
-    @NSManaged public var level: Int16
-    @NSManaged public var experience: Int32
-    @NSManaged public var isFavorite: Bool
     
     // 便捷初始化方法
     convenience init(context: NSManagedObjectContext,

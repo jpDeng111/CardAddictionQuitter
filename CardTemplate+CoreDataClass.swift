@@ -5,16 +5,6 @@ import CoreData
 // 卡片模板：定义所有可能的卡片类型和属性
 @objc(CardTemplate)
 public class CardTemplate: NSManagedObject {
-    // Core Data自动生成的属性访问器
-    @NSManaged public var id: UUID?
-    @NSManaged public var animeSeries: String?
-    @NSManaged public var characterName: String?
-    @NSManaged public var rarity: Int16
-    @NSManaged public var attackBonus: Int32
-    @NSManaged public var defenseBonus: Int32
-    @NSManaged public var cardDescription: String?
-    @NSManaged public var imageUrl: String?
-    @NSManaged public var isActive: Bool
     
     // 便捷初始化方法
     convenience init(context: NSManagedObjectContext, 

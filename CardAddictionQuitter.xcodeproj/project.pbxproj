@@ -33,9 +33,25 @@
 		024 /* UsageRecord+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124 /* UsageRecord+CoreDataClass.swift */; };
 		025 /* UsageRecord+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125 /* UsageRecord+CoreDataProperties.swift */; };
 		026 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 126 /* DataModel.xcdatamodeld */; };
+		04FEF2EB2F5677ED001E1189 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04FEF2E62F55B377001E1189 /* DataModel.xcdatamodeld */; };
+		04FEF2EF2F5681D7001E1189 /* DataModel.xcdatamodeld in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04FEF2E62F55B377001E1189 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		04FEF2EE2F5681BF001E1189 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				04FEF2EF2F5681D7001E1189 /* DataModel.xcdatamodeld in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		04FEF2E72F55B377001E1189 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		100 /* CardAddictionQuitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardAddictionQuitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		101 /* CardAddictionQuitterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAddictionQuitterApp.swift; sourceTree = "<group>"; };
 		102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,15 +94,16 @@
 		300 = {
 			isa = PBXGroup;
 			children = (
-				301 /*  */,
+				301,
 				302 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		301 /*  */ = {
+		301 = {
 			isa = PBXGroup;
 			children = (
 				101 /* CardAddictionQuitterApp.swift */,
+				04FEF2E62F55B377001E1189 /* DataModel.xcdatamodeld */,
 				102 /* ContentView.swift */,
 				103 /* HomeView.swift */,
 				104 /* GachaView.swift */,
@@ -113,7 +130,6 @@
 				125 /* UsageRecord+CoreDataProperties.swift */,
 				126 /* DataModel.xcdatamodeld */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		302 /* Products */ = {
@@ -133,6 +149,7 @@
 			buildPhases = (
 				500 /* Sources */,
 				200 /* Frameworks */,
+				04FEF2EE2F5681BF001E1189 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -205,6 +222,7 @@
 				022 /* MissionRecord+CoreDataClass.swift in Sources */,
 				023 /* MissionRecord+CoreDataProperties.swift in Sources */,
 				024 /* UsageRecord+CoreDataClass.swift in Sources */,
+				04FEF2EB2F5677ED001E1189 /* DataModel.xcdatamodeld in Sources */,
 				025 /* UsageRecord+CoreDataProperties.swift in Sources */,
 				026 /* DataModel.xcdatamodeld in Sources */,
 			);
@@ -410,6 +428,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		04FEF2E62F55B377001E1189 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				04FEF2E72F55B377001E1189 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 04FEF2E72F55B377001E1189 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		126 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

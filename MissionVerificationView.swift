@@ -16,7 +16,7 @@ struct MissionVerificationView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
                     // 任务信息卡片

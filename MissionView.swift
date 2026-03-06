@@ -5,11 +5,10 @@ struct MissionView: View {
     @State private var showingAlert = false
     @State private var alertMessage = ""
     @State private var completedMission: MissionType?
-    @State private var navigationPath = NavigationPath()
     @State private var selectedMission: MissionType?
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
                     // Boost Status Card
@@ -28,7 +27,7 @@ struct MissionView: View {
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("每日任务")
-            .navigationDestination(for: MissionType.self) { mission in
+            .sheet(item: $selectedMission) { mission in
                 MissionVerificationView(missionType: mission)
                     .environmentObject(gameManager)
             }
@@ -203,7 +202,7 @@ struct MissionView: View {
 
     // MARK: - Actions
     private func navigateToVerification(mission: MissionType) {
-        navigationPath.append(mission)
+        selectedMission = mission
     }
 }
 

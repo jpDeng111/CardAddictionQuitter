@@ -35,7 +35,7 @@
 		026 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 126 /* DataModel.xcdatamodeld */; };
 		04FEF2EB2F5677ED001E1189 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04FEF2E62F55B377001E1189 /* DataModel.xcdatamodeld */; };
 		04FEF2EF2F5681D7001E1189 /* DataModel.xcdatamodeld in CopyFiles */ = {isa = PBXBuildFile; fileRef = 04FEF2E62F55B377001E1189 /* DataModel.xcdatamodeld */; };
-/* End PBXBuildFile section */
+		027 /* MissionVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127 /* MissionVerificationView.swift */; };/* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		04FEF2EE2F5681BF001E1189 /* CopyFiles */ = {
@@ -78,7 +78,7 @@
 		123 /* MissionRecord+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MissionRecord+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		124 /* UsageRecord+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageRecord+CoreDataClass.swift"; sourceTree = "<group>"; };
 		125 /* UsageRecord+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageRecord+CoreDataProperties.swift"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		127 /* MissionVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionVerificationView.swift; sourceTree = "<group>"; };/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		200 /* Frameworks */ = {
@@ -118,7 +118,7 @@
 				113 /* TaskSystemProtocol.swift */,
 				114 /* PersistenceController.swift */,
 				115 /* CardTemplateInitializer.swift */,
-				116 /* CardTemplate+CoreDataClass.swift */,
+				127 /* MissionVerificationView.swift */,				116 /* CardTemplate+CoreDataClass.swift */,
 				117 /* CardTemplate+CoreDataProperties.swift */,
 				118 /* UserCard+CoreDataClass.swift */,
 				119 /* UserCard+CoreDataProperties.swift */,
@@ -225,7 +225,7 @@
 				04FEF2EB2F5677ED001E1189 /* DataModel.xcdatamodeld in Sources */,
 				025 /* UsageRecord+CoreDataProperties.swift in Sources */,
 				026 /* DataModel.xcdatamodeld in Sources */,
-			);
+				027 /* MissionVerificationView.swift in Sources */,			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */

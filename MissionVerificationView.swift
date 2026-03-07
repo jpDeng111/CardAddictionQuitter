@@ -19,13 +19,8 @@ struct MissionVerificationView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
-                    // 任务信息卡片
                     missionInfoCard
-
-                    // 验证输入区域
                     verificationInput
-
-                    // 提交按钮
                     submitButton
                 }
                 .padding()
@@ -58,7 +53,6 @@ struct MissionVerificationView: View {
         }
     }
 
-    // MARK: - 任务信息卡片
     private var missionInfoCard: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 12) {
@@ -66,23 +60,18 @@ struct MissionVerificationView: View {
                     Circle()
                         .fill(difficultyColor.opacity(0.2))
                         .frame(width: 50, height: 50)
-
                     Image(systemName: missionIcon)
                         .font(.title3)
                         .foregroundColor(difficultyColor)
                 }
-
                 VStack(alignment: .leading, spacing: 4) {
                     Text(missionType.name)
                         .font(.headline)
-
                     Text(difficultyText)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
-
                 Spacer()
-
                 VStack(spacing: 2) {
                     Image(systemName: "star.fill")
                         .foregroundColor(.orange)
@@ -91,9 +80,7 @@ struct MissionVerificationView: View {
                         .foregroundColor(.orange)
                 }
             }
-
             Divider()
-
             Text(missionType.description)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
@@ -103,54 +90,55 @@ struct MissionVerificationView: View {
         .cornerRadius(16)
     }
 
-    // MARK: - 验证输入区域
-    private var verificationInput: AnyView {
+    @ViewBuilder
+    private var verificationInput: some View {
         switch missionType {
         case .noFapDiary, .goodDeedRecord:
-            return AnyView(TextViewWrapper(
+            TextViewWrapper(
                 text: $viewModel.textInput,
                 placeholder: missionType == .noFapDiary
                     ? "记录今日戒色心得，保持积极心态..."
                     : "记录今天做的一件好事，传递正能量...",
                 minLength: 50
-            ))
+            )
+            .frame(minHeight: 150)
         case .reading, .study:
-            return AnyView(TextViewWrapper(
+            TextViewWrapper(
                 text: $viewModel.textInput,
                 placeholder: missionType == .reading
                     ? "写下你的阅读心得或学习笔记（至少 50 字）..."
                     : "记录今日学习内容和收获（至少 50 字）...",
                 minLength: 50
-            ))
+            )
+            .frame(minHeight: 150)
         case .healthyDiet:
-            return AnyView(ImagePickerView(
+            ImagePickerView(
                 image: $viewModel.selectedImage,
                 title: "拍摄健康饮食照片",
                 description: "拍摄你的健康餐食，展示均衡营养"
-            ))
+            )
         case .meditation:
-            return AnyView(ImagePickerView(
+            ImagePickerView(
                 image: $viewModel.selectedImage,
                 title: "拍摄冥想环境照片",
                 description: "拍摄你的冥想空间或冥想后的感受记录"
-            ))
+            )
         case .morningExercise:
-            return AnyView(ImagePickerView(
+            ImagePickerView(
                 image: $viewModel.selectedImage,
                 title: "拍摄晨练照片",
                 description: "拍摄你的晨练活动或运动记录"
-            ))
+            )
         case .earlySleep:
-            return AnyView(EarlySleepVerificationView(
+            EarlySleepVerificationView(
                 isFirstUseTime: viewModel.firstUseTime,
                 lastUseTime: viewModel.lastUseTime,
                 targetSleepTime: viewModel.targetSleepTime,
                 targetWakeTime: viewModel.targetWakeTime
-            ))
+            )
         }
     }
 
-    // MARK: - 提交按钮
     private var submitButton: some View {
         Button(action: submitMission) {
             HStack {
@@ -172,7 +160,6 @@ struct MissionVerificationView: View {
         .disabled(!canSubmit || viewModel.isSubmitting)
     }
 
-    // MARK: - Helpers
     private var canSubmit: Bool {
         viewModel.canSubmit(missionType: missionType)
     }
@@ -228,8 +215,7 @@ struct TextViewWrapper: UIViewRepresentable {
         textView.textColor = .placeholderText
         textView.text = placeholder
         textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.isScrollEnabled = true
-        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.isScrollEnabled = false
         return textView
     }
 
@@ -241,7 +227,6 @@ struct TextViewWrapper: UIViewRepresentable {
             uiView.textColor = .label
             uiView.text = text
         }
-        context.coordinator.updateCharacterCount(text.count, minLength: minLength)
     }
 
     func makeCoordinator() -> Coordinator {
@@ -250,18 +235,13 @@ struct TextViewWrapper: UIViewRepresentable {
 
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: TextViewWrapper
-        var onCharacterCountChange: ((Int, Int) -> Void)?
 
         init(_ parent: TextViewWrapper) {
             self.parent = parent
         }
 
         func textViewDidChange(_ textView: UITextView) {
-            if textView.textColor == .placeholderText {
-                return
-            }
             parent.text = textView.text
-            onCharacterCountChange?(textView.text.count, parent.minLength)
         }
 
         func textViewDidBeginEditing(_ textView: UITextView) {
@@ -276,10 +256,6 @@ struct TextViewWrapper: UIViewRepresentable {
                 textView.text = parent.placeholder
                 textView.textColor = .placeholderText
             }
-        }
-
-        func updateCharacterCount(_ count: Int, minLength: Int) {
-            onCharacterCountChange?(count, minLength)
         }
     }
 }
@@ -296,7 +272,6 @@ struct ImagePickerView: View {
         VStack(spacing: 16) {
             Text(title)
                 .font(.headline)
-
             Text(description)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
@@ -317,7 +292,6 @@ struct ImagePickerView: View {
                     Image(systemName: "camera.fill")
                         .font(.system(size: 40))
                         .foregroundColor(.secondary)
-
                     Text("暂无图片")
                         .foregroundColor(.secondary)
                 }
@@ -339,7 +313,6 @@ struct ImagePickerView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
-
                 Button(action: { showingPhotoLibrary = true }) {
                     HStack {
                         Image(systemName: "photo.on.rectangle")
@@ -414,7 +387,6 @@ struct EarlySleepVerificationView: View {
         VStack(spacing: 16) {
             Text("早睡早起验证")
                 .font(.headline)
-
             Text("系统将根据你的手机使用时间自动判定")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
@@ -426,7 +398,6 @@ struct EarlySleepVerificationView: View {
                     Text("早睡判定：最后使用时间早于 \(formatTime(targetSleepTime))")
                         .font(.subheadline)
                 }
-
                 HStack {
                     Image(systemName: "sun.max.fill")
                         .foregroundColor(.orange)
@@ -447,7 +418,6 @@ struct EarlySleepVerificationView: View {
                         Text("首次使用：\(formatTime(firstUse))")
                             .font(.subheadline)
                     }
-
                     HStack {
                         Image(systemName: "sunset.fill")
                             .foregroundColor(.purple)
@@ -494,9 +464,6 @@ class MissionVerificationViewModel: ObservableObject {
     @Published var lastUseTime: Date?
     @Published var targetSleepTime: Date
     @Published var targetWakeTime: Date
-
-    @Published var characterCount: Int = 0
-    @Published var meetsLengthRequirement: Bool = false
 
     init() {
         let calendar = Calendar.current

@@ -25,9 +25,9 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="verificationText" optional="YES" attributeType="String"/>
-        <attribute name="verificationImage" optional="YES" attributeType="Binary Data">
+        <attribute name="verificationImage" optional="YES" attributeType="Transformable">
             <user-info>
-                <data key="NSExternalStorageType">SQLite</data>
+                <string key="NSValueTransformerName">NSSecureUnarchiveFromDataTransformerName</string>
             </user-info>
         </attribute>
         <attribute name="isVerified" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

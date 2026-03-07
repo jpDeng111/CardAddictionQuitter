@@ -10,7 +10,9 @@ enum MissionDifficulty: Int {
 }
 
 // 任务类型枚举
-enum MissionType: String, CaseIterable {
+enum MissionType: String, CaseIterable, Identifiable {
+    var id: String { self.rawValue }
+
     case noFapDiary
     case goodDeedRecord
     case morningExercise

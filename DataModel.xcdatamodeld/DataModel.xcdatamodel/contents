@@ -25,7 +25,11 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="verificationText" optional="YES" attributeType="String"/>
-        <attribute name="verificationImage" optional="YES" attributeType="Transformable"/>
+        <attribute name="verificationImage" optional="YES" attributeType="Binary Data">
+            <user-info>
+                <data key="NSExternalStorageType">SQLite</data>
+            </user-info>
+        </attribute>
         <attribute name="isVerified" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="submittedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>

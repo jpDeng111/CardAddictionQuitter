@@ -104,49 +104,49 @@ struct MissionVerificationView: View {
     }
 
     // MARK: - 验证输入区域
-    private var verificationInput: some View {
+    private var verificationInput: AnyView {
         switch missionType {
         case .noFapDiary, .goodDeedRecord:
-            TextViewWrapper(
+            return AnyView(TextViewWrapper(
                 text: $viewModel.textInput,
                 placeholder: missionType == .noFapDiary
                     ? "记录今日戒色心得，保持积极心态..."
                     : "记录今天做的一件好事，传递正能量...",
                 minLength: 50
-            )
+            ))
         case .reading, .study:
-            TextViewWrapper(
+            return AnyView(TextViewWrapper(
                 text: $viewModel.textInput,
                 placeholder: missionType == .reading
                     ? "写下你的阅读心得或学习笔记（至少 50 字）..."
                     : "记录今日学习内容和收获（至少 50 字）...",
                 minLength: 50
-            )
+            ))
         case .healthyDiet:
-            ImagePickerView(
+            return AnyView(ImagePickerView(
                 image: $viewModel.selectedImage,
                 title: "拍摄健康饮食照片",
                 description: "拍摄你的健康餐食，展示均衡营养"
-            )
+            ))
         case .meditation:
-            ImagePickerView(
+            return AnyView(ImagePickerView(
                 image: $viewModel.selectedImage,
                 title: "拍摄冥想环境照片",
                 description: "拍摄你的冥想空间或冥想后的感受记录"
-            )
+            ))
         case .morningExercise:
-            ImagePickerView(
+            return AnyView(ImagePickerView(
                 image: $viewModel.selectedImage,
                 title: "拍摄晨练照片",
                 description: "拍摄你的晨练活动或运动记录"
-            )
+            ))
         case .earlySleep:
-            EarlySleepVerificationView(
+            return AnyView(EarlySleepVerificationView(
                 isFirstUseTime: viewModel.firstUseTime,
                 lastUseTime: viewModel.lastUseTime,
                 targetSleepTime: viewModel.targetSleepTime,
                 targetWakeTime: viewModel.targetWakeTime
-            )
+            ))
         }
     }
 
@@ -241,8 +241,6 @@ struct TextViewWrapper: UIViewRepresentable {
             uiView.textColor = .label
             uiView.text = text
         }
-
-        // 更新字数统计
         context.coordinator.updateCharacterCount(text.count, minLength: minLength)
     }
 
@@ -421,7 +419,6 @@ struct EarlySleepVerificationView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
-            // 判定规则说明
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
                     Image(systemName: "moon.fill")
@@ -442,7 +439,6 @@ struct EarlySleepVerificationView: View {
             .background(Color(.secondarySystemBackground))
             .cornerRadius(12)
 
-            // 今日使用情况
             if let firstUse = isFirstUseTime, let lastUse = lastUseTime {
                 VStack(spacing: 8) {
                     HStack {
@@ -480,7 +476,7 @@ struct EarlySleepVerificationView: View {
 
     private func formatTime(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.timeFormat = "HH:mm"
+        formatter.dateFormat = "HH:mm"
         return formatter.string(from: date)
     }
 }
@@ -494,18 +490,15 @@ class MissionVerificationViewModel: ObservableObject {
     @Published var showErrorAlert: Bool = false
     @Published var errorMessage: String = ""
 
-    // 早睡早起判定
     @Published var firstUseTime: Date?
     @Published var lastUseTime: Date?
     @Published var targetSleepTime: Date
     @Published var targetWakeTime: Date
 
-    // 文本输入状态
     @Published var characterCount: Int = 0
     @Published var meetsLengthRequirement: Bool = false
 
     init() {
-        // 设置默认目标时间：23 点前睡，7 点后起
         let calendar = Calendar.current
         var sleepComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         sleepComponents.hour = 23
@@ -534,7 +527,6 @@ class MissionVerificationViewModel: ObservableObject {
             return false
         }
 
-        // 检查最后使用时间是否早于目标睡觉时间
         let calendar = Calendar.current
         let sleepTimeComponents = calendar.dateComponents([.hour, .minute], from: targetSleepTime)
         var targetSleepComponents = calendar.dateComponents([.year, .month, .day], from: lastUse)
@@ -544,7 +536,6 @@ class MissionVerificationViewModel: ObservableObject {
             return false
         }
 
-        // 检查首次使用时间是否晚于目标起床时间
         let wakeTimeComponents = calendar.dateComponents([.hour, .minute], from: targetWakeTime)
         var targetWakeComponents = calendar.dateComponents([.year, .month, .day], from: firstUse)
         targetWakeComponents.hour = wakeTimeComponents.hour
@@ -565,11 +556,8 @@ class MissionVerificationViewModel: ObservableObject {
         }
 
         isSubmitting = true
-
-        // 模拟提交延迟
         try? await Task.sleep(nanoseconds: 500_000_000)
 
-        // 完成任务 - 使用带验证内容的方法
         let success = gameManager.completeMissionWithVerification(
             missionType,
             verificationText: textInput,
@@ -586,7 +574,6 @@ class MissionVerificationViewModel: ObservableObject {
         }
     }
 
-    // 从 UsageRecord 加载使用时间数据
     func loadUsageRecords() {
         let context = PersistenceController.shared.container.viewContext
         let request: NSFetchRequest<UsageRecord> = UsageRecord.fetchRequest()
@@ -600,7 +587,6 @@ class MissionVerificationViewModel: ObservableObject {
 
         do {
             let records = try context.fetch(request)
-            // 找到最早和最晚的使用记录
             if let firstRecord = records.first,
                let lastRecord = records.last {
                 self.firstUseTime = firstRecord.date

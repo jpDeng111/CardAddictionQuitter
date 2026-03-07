@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import UIKit
 
 // MissionRecord 类的 Core Data 实现
 @objc(MissionRecord)

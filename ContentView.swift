@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var gameManager: GameManager
     @State private var selectedTab = 0
-    
+
     var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()
@@ -12,27 +12,34 @@ struct ContentView: View {
                     Text("首页")
                 }
                 .tag(0)
-            
+
             GachaView()
                 .tabItem {
                     Image(systemName: "sparkles")
                     Text("抽卡")
                 }
                 .tag(1)
-            
+
             CollectionView()
                 .tabItem {
                     Image(systemName: "rectangle.stack.fill")
                     Text("收藏")
                 }
                 .tag(2)
-            
+
             MissionView()
                 .tabItem {
                     Image(systemName: "checkmark.circle.fill")
                     Text("任务")
                 }
                 .tag(3)
+
+            ProgressView()
+                .tabItem {
+                    Image(systemName: "chart.bar.fill")
+                    Text("统计")
+                }
+                .tag(4)
         }
         .accentColor(.purple)
     }

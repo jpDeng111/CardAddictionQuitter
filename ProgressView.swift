@@ -260,8 +260,6 @@ struct ProgressView: View {
     }
 }
 
-// MARK: - 统计卡片
-struct StatCard: View {
     let title: String
     let value: String
     let icon: String

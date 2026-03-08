@@ -194,7 +194,7 @@ struct ProgressView: View {
                 if calendar.isDate(date, inSameDayAs: currentDate) {
                     streak += 1
                     currentDate = calendar.date(byAdding: .day, value: -1, to: currentDate)!
-                } else if calendar.isDate(date, lessThan: calendar.startOfDay(for: currentDate)) {
+                } else if date < calendar.startOfDay(for: currentDate) {
                     break
                 }
             }

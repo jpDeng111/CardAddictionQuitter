@@ -260,32 +260,6 @@ struct ProgressView: View {
     }
 }
 
-    let title: String
-    let value: String
-    let icon: String
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 8) {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundColor(color)
-                Spacer()
-            }
-
-            Text(value)
-                .font(.title2.bold())
-
-            Text(title)
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(color.opacity(0.1))
-        .cornerRadius(12)
-    }
-}
 
 // MARK: - 热力图单元格
 struct HeatmapCell: View {
